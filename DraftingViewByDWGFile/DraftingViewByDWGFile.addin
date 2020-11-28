@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Assembly>DraftingViewByDWGFile.dll</Assembly>
+    <ClientId>11CF4EAC-8AA4-47FE-8B93-FC5326F1408E</ClientId>
+    <FullClassName>DraftingViewByDWGFile.App</FullClassName>
+    <Name>DraftingViewByDWGFile</Name>
+    <VendorId>Egorov.A</VendorId>
+    <VendorDescription>www.github.com/MyN1ckName/DraftingViewByDWGFile</VendorDescription>
+  </AddIn>
+</RevitAddIns>
