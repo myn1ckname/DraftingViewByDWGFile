@@ -33,21 +33,22 @@ namespace DraftingViewByDWGFile
 					if (openFileDialog.ShowDialog() == DialogResult.OK)
 					{
 						filePath = openFileDialog.FileName;
+
+						using (TransactionGroup tg = new TransactionGroup(uidoc.Document, "DraftingViewByDWGFile"))
+						{
+							tg.Start();
+
+							ViewDrafting view = ViewCreator.CreateViewDrafting(uidoc.Document, System.IO.Path.GetFileName(filePath));
+							ElementId linkId = DWGLink.Insert(view, filePath);
+							CreateGeometryObject.CreateOnViewDrafting(view as ViewDrafting, linkId);
+							DWGLink.Delete(uidoc.Document, linkId);
+
+							uidoc.ActiveView = view;
+
+							tg.Assimilate();
+						}
 					}
-				}
-				using (TransactionGroup tg = new TransactionGroup(uidoc.Document, "DraftingViewByDWGFile"))
-				{
-					tg.Start();
-
-					ViewDrafting view = ViewCreator.CreateViewDrafting(uidoc.Document, System.IO.Path.GetFileName(filePath));
-					ElementId linkId = DWGLink.Insert(view, filePath);
-					CreateGeometryObject.CreateOnViewDrafting(view as ViewDrafting, linkId);
-					DWGLink.Delete(uidoc.Document, linkId);
-
-					uidoc.ActiveView = view;
-
-					tg.Assimilate();
-				}
+				}				
 				return Result.Succeeded;
 			}
 			catch (Autodesk.Revit.Exceptions.OperationCanceledException)
